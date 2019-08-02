@@ -94,9 +94,17 @@ print_prep(int table, int update)
 				}
 		return(fopen(upath, "w"));
         }
+    
+	if (zstdout) 
+	{
+		return(stdout);
+	}
+	else
+	{
     res = tbl_open(table, "w");
     OPEN_CHECK(res, tdefs[table].name);
     return(res);
+}
 }
 
 int
@@ -135,7 +143,7 @@ dbg_print(int format, FILE *target, void *data, int len, int sep)
 			}
 		dollars = cents / 100;
 		cents %= 100;
-		fprintf(target, "%ld.%02ld", dollars, cents);
+		fprintf(target, "%d.%02d", dollars, cents);
 		break;
 	case DT_CHR:
 		fprintf(target, "%c", *(char *)data);
